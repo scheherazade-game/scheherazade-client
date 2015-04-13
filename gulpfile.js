@@ -9,7 +9,7 @@ var PORT = gutil.env.port || 8080;
 gulp.task("static", function() {
   return gulp.src([
     "index.html"
-  ]).pipe(gulp.dest("dist/"));
+  ]).pipe(gulp.dest("www/"));
 });
 
 gulp.task("build-dev", ["webpack:build-dev"], function() {

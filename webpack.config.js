@@ -1,11 +1,12 @@
 var webpack = require("webpack"),
-	_ = require("lodash");
+    ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 module.exports = {
   entry: ['.'],
   output: {
-	path: __dirname + "/dist",
-    contentBase: "dist/",
-    publicPath: "dist/",
+	path: __dirname + "/www",
+    contentBase: "www/",
+    publicPath: "www/",
 	filename: "index.js",
     sourceMapFilename: "index.js.map"
   },
@@ -20,7 +21,7 @@ module.exports = {
 	  loader: "babel"
 	}, {
       test: /\.less$/,
-      loader: "style!css!less"
+      loader: ExtractTextPlugin.extract("css?sourceMap!less?sourceMap")
     }, {
       test: /\.woff2?(\?v=\d+\.\d+\.\d+)?$/,
       loader: "url?limit=10000&minetype=application/font-woff"
@@ -36,5 +37,6 @@ module.exports = {
     }]
   },
   plugins: [
+    new ExtractTextPlugin("styles.css")
   ]
 };
