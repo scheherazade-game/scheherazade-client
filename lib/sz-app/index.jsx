@@ -11,7 +11,7 @@ export default class SzApp extends React.Component {
     let HomeLink = <Link to="home">Scheherazade</Link>;
     return (
       <div>
-        <Navbar brand={HomeLink}>
+        <Navbar inverse brand={HomeLink}>
         <Nav>
           <NavItemLink to="play">
             Play
