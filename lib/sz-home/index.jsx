@@ -11,7 +11,7 @@ export default class SzHome extends React.Component {
           Scheherazade is an online storytelling game
           that turns roleplaying into its own MMO.
         </p>
-        <ButtonLink bsStyle="primary" to="play">Play Now!</ButtonLink>
+        <ButtonLink bsStyle="primary" to="play">Play Now</ButtonLink>
       </Jumbotron>
     );
   }
