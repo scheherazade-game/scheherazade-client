@@ -4,6 +4,9 @@ import {Nav, Navbar} from "react-bootstrap";
 import {NavItemLink} from "react-router-bootstrap";
 
 export default class SzApp extends React.Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
     let HomeLink = <Link to="home">Scheherazade</Link>;
     return (
@@ -19,7 +22,7 @@ export default class SzApp extends React.Component {
         </Nav>
         </Navbar>
         <div className="container-fluid">
-          <RouteHandler/>
+          <RouteHandler />
         </div>
       </div>
     );

@@ -4,22 +4,25 @@ var webpack = require("webpack"),
 module.exports = {
   entry: ['.'],
   output: {
-	path: __dirname + "/www",
+    path: __dirname + "/www",
     contentBase: "www/",
     publicPath: "www/",
-	filename: "index.js",
+    filename: "index.js",
     sourceMapFilename: "index.js.map"
   },
+  externals: [{
+    firebase: "var Firebase"
+  }],
   resolve: {
-	alias: {},
+    alias: {},
     extensions: ["", ".js", ".jsx"],
-	modulesDirectories: [__dirname, "node_modules"]
+    modulesDirectories: [__dirname, "node_modules"]
   },
   module: {
-	loaders: [{
-	  test: /(lib\/.*\.jsx?$)|(.*index.jsx?$)/,
-	  loader: "babel"
-	}, {
+    loaders: [{
+      test: /(lib\/.*\.jsx?$)|(.*index.jsx?$)/,
+      loader: "babel"
+    }, {
       test: /\.less$/,
       loader: ExtractTextPlugin.extract("css?sourceMap!less?sourceMap")
     }, {
@@ -37,6 +40,11 @@ module.exports = {
     }]
   },
   plugins: [
-    new ExtractTextPlugin("styles.css")
+    new ExtractTextPlugin("styles.css"),
+    new webpack.DefinePlugin({
+      "process.env": {
+        "FIREBASE_URL": JSON.stringify("https://radiant-inferno-4418.firebaseio.com")
+      }
+    })
   ]
 };
