@@ -12,7 +12,7 @@ export default class SzApp extends React.Component {
     return (
       <div>
         <Navbar inverse brand={HomeLink}>
-        <Nav>
+        <Nav className="pull-right">
           <NavItemLink to="play">
             Play
           </NavItemLink>
