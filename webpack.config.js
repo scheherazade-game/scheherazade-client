@@ -10,9 +10,6 @@ module.exports = {
     filename: "index.js",
     sourceMapFilename: "index.js.map"
   },
-  externals: [{
-    firebase: "var Firebase"
-  }],
   resolve: {
     alias: {},
     extensions: ["", ".js", ".jsx"],
@@ -21,6 +18,7 @@ module.exports = {
   module: {
     loaders: [{
       test: /(lib\/.*\.jsx?$)|(.*index.jsx?$)/,
+      exclude: /firebase-web\.js/,
       loader: "babel"
     }, {
       test: /\.less$/,

@@ -12,6 +12,7 @@
   "dependencies": {
     "bootstrap": "^3.3.4",
     "classnames": "^1.2.0",
+    "firebase": "^2.2.4",
     "immutable": "^3.7.1",
     "jquery": ">1.9.0",
     "lodash": "^3.6.0",
