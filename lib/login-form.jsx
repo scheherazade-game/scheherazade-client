@@ -4,36 +4,69 @@ import db from "lib/db";
 
 export default React.createClass({
   getInitialState() {
-    return { email: "", password: "", error: null };
+    return { email: "", password: "", error: null, type: "login" };
   },
-  login(email, password) {
-    db.authWithPassword({
-      email: email,
-      password: password
-    }, (error, authData) => {
-      this.setState({error, pending: false});
-      !error && this.props.onLogin && this.props.onLogin();
+  reset() {
+    db.resetPassword({
+      email: this.state.email
+    }, () => {
+      this.props.onDone();
     });
   },
-  register(email, password) {
+  login() {
+    db.authWithPassword({
+      email: this.state.email,
+      password: this.state.password
+    }, (error, authData) => {
+      this.setState({error, pending: false});
+      !error && this.props.onDone();
+    });
+  },
+  register() {
+    if (this.state.password !== this.state.confirm) {
+      this.setState({
+        error: new Error("Password and confirmation do not match.")
+      });
+      return;
+    }
+    if (!this.state.is18) {
+      this.setState({
+        error: new Error("You must be 18 or older to register.")
+      });
+      return;
+    }
     db.createUser({
-      email: email,
-      password: password
+      email: this.state.email,
+      password: this.state.password
     }, (error, authData) => {
       this.setState({error, pending: !error});
       !error && db.child("users").child(authData.uid).set({
         uid: authData.uid,
-        email: email
+        email: this.state.email,
+        name: this.state.name
       }, error => {
         this.setState({error, pending: !error});
-        !error && this.login(email, password);
+        !error && this.login();
       });
     });
   },
-  handleSubmit(ev, type) {
+  handleSubmit(ev) {
     ev.preventDefault();
     this.setState({pending: true});
-    this[type](this.state.email, this.state.password);
+    this[this.state.type]();
+  },
+  renderInput(props) {
+    return (
+        <Input {...props}
+               bsStyle={this.state.error && "error"}
+               disabled={this.state.pending}
+               onChange={e => {
+                 this.setState({error: null, [props.ref]: e.target.value});
+               }}
+               onInput={e => {
+                 this.setState({error: null, [props.ref]: e.target.value});
+               }}>
+        </Input>);
   },
   render() {
     let FormError = this.state.error ? (
@@ -42,32 +75,68 @@ export default React.createClass({
         </Alert>
     ) :
         null;
+    let isLogin = this.state.type === "login";
+    let isRegister = this.state.type === "register";
+    let isReset = this.state.type === "reset";
     return (
-        <form onSubmit={e => this.handleSubmit(e, "login")}>
+        <form onSubmit={e => this.handleSubmit(e)}>
           {FormError}
-          <Input ref="email"
-                 type="email"
-                 placeholder="you@domain.io"
-                 bsStyle={this.state.error ? "error" : ""}
-                 disabled={this.state.pending}
-                 onInput={e => this.setState({error: null, email: e.target.value})} />
-          <Input ref="password"
-                 type="password"
-                 placeholder="Password"
-                 bsStyle={this.state.error ? "error" : ""}
-                 disabled={this.state.pending}
-                 onInput={e => this.setState({error: null, password: e.target.value})} />
+          {isRegister && this.renderInput({
+            ref: "name",
+            type: "text",
+            label: "Name",
+            placeholder: "Alex Doe"
+          })}
+          {this.renderInput({
+            ref: "email",
+            type: "email",
+            label: "Email",
+            help: isReset ? "We'll send you an email to this address." : "",
+            placeholder: "you@somewhere.io"
+          })}
+          {(isLogin || isRegister) && this.renderInput({
+            ref: "password",
+            type: "password",
+            label: "Password",
+            placeholder: "supersecret"
+          })}
+          {isRegister && this.renderInput({
+            ref: "confirm",
+            type: "password",
+            label: "Confirm Password",
+            placeholder: "supersecret"
+          })}
+          {isRegister && this.renderInput({
+            ref: "is18",
+            type: "checkbox",
+            label: "I'm 18 or older"
+          })}
           <ButtonToolbar className="pull-right">
-            <Button bsStyle="link">Forgot Password?</Button>
             <Button disabled={this.state.pending}
-                    onClick={e => this.handleSubmit(e, "register")}>
-              Register
+                    onClick={e => {
+                      e.preventDefault();
+                      let newType = isLogin ? "register" : "login";
+                      this.setState({type: newType});
+                      this.props.onTypeChange &&
+                        this.props.onTypeChange(newType);
+                    }}>
+              {!isRegister ? "Sign In" : "Register" }
             </Button>
             <Button bsStyle="primary"
                     type="submit"
                     disabled={this.state.pending}>
-              Sign In
+              Submit
             </Button>
+          </ButtonToolbar>
+          <ButtonToolbar className="pull-right">
+            {!isReset &&
+             <Button bsStyle="link"
+                     onClick={e => {
+                       this.setState({type: "reset"});
+                       this.props.onTypeChange("reset");
+                     }}>
+             Forgot Password?
+             </Button>}
           </ButtonToolbar>
         </form>
     );

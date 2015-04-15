@@ -29,12 +29,21 @@ export default React.createClass({
   },
   componentWillMount() { db.onAuth(this.setUser); },
   componentWillUnmount() { db.offAuth(this.setUser); },
+  getModalTitle() {
+    switch (this.state.loginType) {
+      case "login": return "Sign In";
+      case "register": return "Register";
+      case "reset": return "Reset Password";
+      default: return "";
+    }
+  },
   render() {
     let HomeLink = <Link to="home">Scheherazade</Link>;
     let LoginModal = (
-        <Modal ref="modal" title="Sign In">
+        <Modal ref="modal" title={this.getModalTitle()}>
           <div className="modal-body">
-            <LoginForm onLogin={() => this.refs.modal.props.onRequestHide()}/>
+            <LoginForm onTypeChange={type => this.setState({loginType: type})}
+                       onDone={() => this.refs.modal.props.onRequestHide()}/>
           </div>
           <div className="modal-footer"></div>
         </Modal>
