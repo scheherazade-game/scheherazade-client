@@ -1,10 +1,10 @@
 import React from "react";
-import {Input, Button, Alert} from "react-bootstrap";
+import {Input, Button, ButtonToolbar, Alert} from "react-bootstrap";
 import db from "lib/db";
 
 export default React.createClass({
   getInitialState() {
-    return { email: "", password: "", error: null, type: "login" };
+    return { email: "", password: "", error: null };
   },
   login(email, password) {
     db.authWithPassword({
@@ -22,6 +22,7 @@ export default React.createClass({
     }, (error, authData) => {
       this.setState({error, pending: !error});
       !error && db.child("users").child(authData.uid).set({
+        uid: authData.uid,
         email: email
       }, error => {
         this.setState({error, pending: !error});
@@ -29,10 +30,10 @@ export default React.createClass({
       });
     });
   },
-  handleSubmit(ev) {
+  handleSubmit(ev, type) {
     ev.preventDefault();
     this.setState({pending: true});
-    this[this.state.type](this.state.email, this.state.password);
+    this[type](this.state.email, this.state.password);
   },
   render() {
     let FormError = this.state.error ? (
@@ -42,7 +43,7 @@ export default React.createClass({
     ) :
         null;
     return (
-        <form onSubmit={e => this.handleSubmit(e)}>
+        <form onSubmit={e => this.handleSubmit(e, "login")}>
           {FormError}
           <Input ref="email"
                  type="email"
@@ -56,22 +57,18 @@ export default React.createClass({
                  bsStyle={this.state.error ? "error" : ""}
                  disabled={this.state.pending}
                  onInput={e => this.setState({error: null, password: e.target.value})} />
-          <span className="pull-right">
+          <ButtonToolbar className="pull-right">
             <Button bsStyle="link">Forgot Password?</Button>
             <Button disabled={this.state.pending}
-                    onClick={e => {
-                      this.setState({type: "register"});
-                      this.handleSubmit(e);
-                    }}>
+                    onClick={e => this.handleSubmit(e, "register")}>
               Register
             </Button>
             <Button bsStyle="primary"
                     type="submit"
-                    disabled={this.state.pending}
-                    onClick={() => this.setState({type: "login"})}>
+                    disabled={this.state.pending}>
               Sign In
             </Button>
-          </span>
+          </ButtonToolbar>
         </form>
     );
   }
