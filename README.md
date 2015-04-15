@@ -6,9 +6,5 @@ This repo tracks the client-side code for
 ## Getting started
 
 0. `npm install && npm update` 
-0. `grunt serve [--proxy-host <server-host*=localhost>] [--proxy-port <server-port*=4000>]`
-0. Visit [localhost:8125](http://localhost:8125)
-
-* This client (mostly) relies on having a working
-[Scheherazade server](https://github.com/scheherazade-game/scheherazade-server). If
-you're only developing locally, you'll need to install that.
+0. `gulp`
+0. Visit [localhost:8080](http://localhost:8080) or, for automatic reloading: [localhost:8080/webpack-dev-server/](http://localhost:8080/webpack-dev-server/)
