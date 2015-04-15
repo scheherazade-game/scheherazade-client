@@ -1,4 +1,5 @@
 import React from "react";
+import TransitionGroup from "react/lib/ReactCSSTransitionGroup";
 import ReactFireMixin from "reactfire";
 import {RouteHandler, Link} from "react-router";
 import {
@@ -15,8 +16,13 @@ import {NavItemLink} from "react-router-bootstrap";
 import db from "lib/db";
 import LoginForm from "lib/login-form";
 
+import "./styles.less";
+
 export default React.createClass({
   mixins: [ReactFireMixin],
+  contextTypes: {
+    router: React.PropTypes.func
+  },
   getInitialState() {
     return {user: null};
   },
@@ -62,7 +68,7 @@ export default React.createClass({
             <NavItem onClick={e => e.preventDefault()}>Sign In</NavItem>
           </ModalTrigger>;
     return (
-      <div>
+      <div className="sz-app">
         <Navbar inverse brand={HomeLink} toggleNavKey={0}>
           <CollapsableNav eventKey={0}>
             <Nav navbar right>
@@ -76,9 +82,11 @@ export default React.createClass({
             </Nav>
           </CollapsableNav>
         </Navbar>
-        <div className="container-fluid">
-          <RouteHandler />
-        </div>
+        <TransitionGroup transitionName="fade"
+                         component="div"
+                         className="container-fluid">
+          <RouteHandler key={this.context.router.getCurrentPath()}/>
+        </TransitionGroup>
       </div>
     );
   }
