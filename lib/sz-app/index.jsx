@@ -2,8 +2,9 @@ import React from "react";
 import ReactFireMixin from "reactfire";
 import {RouteHandler, Link} from "react-router";
 import {
-  Nav,
   Navbar,
+  Nav,
+  CollapsableNav,
   NavItem,
   Modal,
   ModalTrigger,
@@ -61,16 +62,18 @@ export default React.createClass({
           </ModalTrigger>;
     return (
       <div>
-        <Navbar inverse brand={HomeLink}>
-        <Nav className="pull-right">
-          <NavItemLink to="play">
-            Play
-          </NavItemLink>
-          <NavItemLink to="about">
-            About
-          </NavItemLink>
-          {UserNavItem}
-        </Nav>
+        <Navbar inverse brand={HomeLink} toggleNavKey={0}>
+          <CollapsableNav eventKey={0}>
+            <Nav navbar right>
+              <NavItemLink to="play">
+                Play
+              </NavItemLink>
+              <NavItemLink to="about">
+                About
+              </NavItemLink>
+              {UserNavItem}
+            </Nav>
+          </CollapsableNav>
         </Navbar>
         <div className="container-fluid">
           <RouteHandler />
