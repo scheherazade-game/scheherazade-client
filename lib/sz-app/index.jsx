@@ -42,7 +42,7 @@ export default React.createClass({
       case "reset": return "Reset Password";
       case "login":
       default:
-      return "Sign";
+      return "Sign In";
     }
   },
   render() {
@@ -51,7 +51,10 @@ export default React.createClass({
         <Modal ref="modal" title={this.getModalTitle()}>
           <div className="modal-body">
             <LoginForm onTypeChange={type => this.setState({loginType: type})}
-                       onDone={() => this.refs.modal.props.onRequestHide()}/>
+                       onDone={() => {
+                         this.refs.modal &&
+                           this.refs.modal.props.onRequestHide();
+                       }}/>
           </div>
           <div className="modal-footer"></div>
         </Modal>

@@ -25,13 +25,15 @@ export default React.createClass({
   register() {
     if (this.state.password !== this.state.confirm) {
       this.setState({
-        error: new Error("Password and confirmation do not match.")
+        error: new Error("Password and confirmation do not match."),
+        pending: false
       });
       return;
     }
     if (!this.state.is18) {
       this.setState({
-        error: new Error("You must be 18 or older to register.")
+        error: new Error("You must be 18 or older to register."),
+        pending: false
       });
       return;
     }
