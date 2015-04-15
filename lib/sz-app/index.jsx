@@ -15,6 +15,9 @@ import {
 import {NavItemLink} from "react-router-bootstrap";
 import db from "lib/db";
 import LoginForm from "lib/login-form";
+import $ from "jquery";
+import "Ripple.js/dist/ripple.css";
+import "Ripple.js/dist/ripple.js";
 
 import "./styles.less";
 
@@ -25,6 +28,9 @@ export default React.createClass({
   },
   getInitialState() {
     return {user: null};
+  },
+  componentDidMount() {
+    $.ripple(".btn,.navbar-toggle");
   },
   setUser(authData) {
     if (this.firebaseRefs.user) { this.unbind("user"); }

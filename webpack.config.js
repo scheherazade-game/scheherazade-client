@@ -28,6 +28,9 @@ module.exports = {
       test: /\.less$/,
       loader: ExtractTextPlugin.extract("css?sourceMap!less?sourceMap")
     }, {
+      test: /\.css$/,
+      loader: ExtractTextPlugin.extract("css?sourceMap")
+    }, {
       test: /\.woff2?(\?v=\d+\.\d+\.\d+)?$/,
       loader: "url?limit=10000&minetype=application/font-woff"
     }, {
@@ -47,6 +50,9 @@ module.exports = {
       "process.env": {
         "FIREBASE_URL": JSON.stringify("https://radiant-inferno-4418.firebaseio.com")
       }
+    }),
+    new webpack.ProvidePlugin({
+      jQuery: "jquery"
     })
   ]
 };

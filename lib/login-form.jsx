@@ -122,7 +122,7 @@ export default React.createClass({
                       this.props.onTypeChange &&
                         this.props.onTypeChange(newType);
                     }}>
-              {!isLogin ? "Sign In" : "Register" }
+              <span>{!isLogin ? "Sign In" : "Register" }</span>
             </Button>
             <Button bsStyle="primary"
                     type="submit"
