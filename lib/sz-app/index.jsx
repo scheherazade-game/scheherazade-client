@@ -43,7 +43,7 @@ export default React.createClass({
           <DropdownButton title={this.state.user.email}>
             <MenuItem>Profile</MenuItem>
             <MenuItem divider />
-            <MenuItem onClick={() => db.unauth()}>
+            <MenuItem onClick={e => {e.preventDefault(); db.unauth();}}>
               Sign Out
             </MenuItem>
           </DropdownButton> :
