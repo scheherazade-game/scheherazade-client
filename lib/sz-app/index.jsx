@@ -32,10 +32,11 @@ export default React.createClass({
   componentWillUnmount() { db.offAuth(this.setUser); },
   getModalTitle() {
     switch (this.state.loginType) {
-      case "login": return "Sign In";
       case "register": return "Register";
       case "reset": return "Reset Password";
-      default: return "";
+      case "login":
+      default:
+      return "Sign";
     }
   },
   render() {
