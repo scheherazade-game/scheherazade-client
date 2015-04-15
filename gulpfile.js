@@ -29,9 +29,17 @@ gulp.task("webpack:build", function(callback) {
 		"NODE_ENV": JSON.stringify("production")
 	  }
 	}),
-	new webpack.optimize.DedupePlugin(),
-	new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}})
-  );
+	new webpack.optimize.DedupePlugin());
+
+  myConfig.plugins.push(
+    new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}));
+
+  // TODO - make chunkable pages more predictable.
+  myConfig.module.loaders.push({
+    include: /sz-.*/,
+    exclude: [/sz-app/, /sz-routes/],
+    loader: "react-router-proxy!babel"
+  });
 
   // run webpack
   webpack(myConfig, function(err, stats) {
