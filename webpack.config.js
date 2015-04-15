@@ -6,7 +6,7 @@ module.exports = {
   output: {
     path: __dirname + "/www",
     contentBase: "www/",
-    publicPath: "www/",
+    publicPath: "/",
     filename: "index.js",
     sourceMapFilename: "index.js.map"
   },
@@ -20,6 +20,10 @@ module.exports = {
       test: /(lib\/.*\.jsx?$)|(.*index.jsx?$)/,
       exclude: /firebase-web\.js/,
       loader: "babel"
+    }, {
+      include: /sz-.*/,
+      exclude: [/sz-app/, /sz-routes/],
+      loader: "react-router-proxy!babel"
     }, {
       test: /\.less$/,
       loader: ExtractTextPlugin.extract("css?sourceMap!less?sourceMap")

@@ -34,13 +34,6 @@ gulp.task("webpack:build", function(callback) {
   myConfig.plugins.push(
     new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}));
 
-  // TODO - make chunkable pages more predictable.
-  myConfig.module.loaders.push({
-    include: /sz-.*/,
-    exclude: [/sz-app/, /sz-routes/],
-    loader: "react-router-proxy!babel"
-  });
-
   // run webpack
   webpack(myConfig, function(err, stats) {
 	if(err) throw new gutil.PluginError("webpack:build", err);
@@ -78,7 +71,6 @@ gulp.task("webpack-dev-server", function(callback) {
 
   // Start a webpack-dev-server
   new WebpackDevServer(webpack(myConfig), {
-    publicPath: "/",
 	stats: {
 	  colors: true
 	}
