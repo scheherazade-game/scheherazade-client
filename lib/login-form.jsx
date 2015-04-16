@@ -1,5 +1,6 @@
 import React from "react";
 import {Input, Button, ButtonToolbar, Alert} from "react-bootstrap";
+import FlatButton from "lib/material/flat-button";
 import db from "lib/db";
 
 export default React.createClass({
@@ -114,16 +115,16 @@ export default React.createClass({
             label: "I'm 18 or older"
           })}
           <ButtonToolbar className="pull-right">
-            <Button disabled={this.state.pending}
-                    onClick={e => {
-                      e.preventDefault();
-                      let newType = isLogin ? "register" : "login";
-                      this.setState({type: newType});
-                      this.props.onTypeChange &&
-                        this.props.onTypeChange(newType);
-                    }}>
+            <FlatButton disabled={this.state.pending}
+                        onClick={e => {
+                          e.preventDefault();
+                          let newType = isLogin ? "register" : "login";
+                          this.setState({type: newType});
+                          this.props.onTypeChange &&
+                            this.props.onTypeChange(newType);
+                        }}>
               <span>{!isLogin ? "Sign In" : "Register" }</span>
-            </Button>
+            </FlatButton>
             <Button bsStyle="primary"
                     type="submit"
                     disabled={this.state.pending}>
