@@ -7,6 +7,7 @@
 //
 //## Gray and brand colors for use across Bootstrap.
 
+@import                  "./colors.less";
 @gray-base:              #000;
 @gray-darker:            lighten(@gray-base, 13.5%); // #222
 @gray-dark:              #212121;
@@ -14,7 +15,12 @@
 @gray-light:             #bbb;
 @gray-lighter:           lighten(@gray-base, 93.5%); // #eee
 
-@brand-primary:         #43A047;
+@brand-primary:         @deep-purple-500;
+@brand-primary-dark:    @deep-purple-700;
+@brand-primary-light:   @deep-purple-100;
+@brand-accent:          @teal-500;
+@brand-accent-light:    @teal-200;
+@brand-accent-dark:     @teal-700;
 @brand-success:         #4CAF50;
 @brand-info:            #9C27B0;
 @brand-warning:         #ff9800;
@@ -31,9 +37,9 @@
 @text-color:            @gray;
 
 //** Global textual link color.
-@link-color:            @brand-primary;
+@link-color:            @brand-accent;
 //** Link hover color set via `darken()` function.
-@link-hover-color:      darken(@link-color, 15%);
+@link-hover-color:      @brand-accent-dark; 
 //** Link hover decoration.
 @link-hover-decoration: underline;
 
@@ -109,7 +115,8 @@
 //** Global color for active items (e.g., navs or dropdowns).
 @component-active-color:    #fff;
 //** Global background color for active items (e.g., navs or dropdowns).
-@component-active-bg:       @brand-primary;
+@component-active-bg:       @brand-accent;
+@component-active-bg-light: @brand-accent-light;
 
 //** Width of the `border` for generating carets that indicator dropdowns.
 @caret-width-base:          4px;
@@ -149,7 +156,7 @@
 @btn-default-border:             #eee;
 
 @btn-primary-color:              #fff;
-@btn-primary-bg:                 @brand-primary;
+@btn-primary-bg:                 @brand-accent;
 @btn-primary-border:             transparent;
 
 @btn-success-color:              #fff;
@@ -368,7 +375,7 @@
 @navbar-default-link-hover-color:          @gray-dark;
 @navbar-default-link-hover-bg:             transparent;
 @navbar-default-link-active-color:         @gray-dark;
-@navbar-default-link-active-bg:            darken(@navbar-default-bg, 6.5%);
+@navbar-default-link-active-bg:            @brand-accent-dark;
 @navbar-default-link-disabled-color:       #ccc;
 @navbar-default-link-disabled-bg:          transparent;
 
@@ -561,7 +568,7 @@
 //** Default label background color
 @label-default-bg:            @gray-light;
 //** Primary label background color
-@label-primary-bg:            @brand-primary;
+@label-primary-bg:            @brand-accent;
 //** Success label background color
 @label-success-bg:            @brand-success;
 //** Info label background color
@@ -678,7 +685,7 @@
 //** Border color of active list elements
 @list-group-active-border:      @list-group-active-bg;
 //** Text color for content within active list items
-@list-group-active-text-color:  lighten(@list-group-active-bg, 40%);
+@list-group-active-text-color:  @component-active-bg-light;
 
 //** Text color of disabled list items
 @list-group-disabled-color:      @gray-light;
