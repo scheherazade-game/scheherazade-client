@@ -3,14 +3,14 @@ import TransitionGroup from "react/lib/ReactCSSTransitionGroup";
 import ReactFireMixin from "reactfire";
 import {RouteHandler, Link} from "react-router";
 import {
-  Navbar,
-  Nav,
   CollapsableNav,
-  NavItem,
+  DropdownButton,
+  MenuItem,
   Modal,
   ModalTrigger,
-  DropdownButton,
-  MenuItem
+  Nav,
+  Navbar,
+  NavItem
 } from "react-bootstrap";
 import {NavItemLink} from "react-router-bootstrap";
 import db from "lib/db";
