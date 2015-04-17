@@ -72,11 +72,17 @@ export default React.createClass({
               this.setState({loginType: "login"});
             }}>Sign In</NavItem>
           </ModalTrigger>;
+    let routes = this.context.router.getCurrentRoutes();
+    let brand = routes[routes.length-1].name;
+    brand = brand[0].toUpperCase() + brand.slice(1).toLowerCase();
     return (
       <div className="sz-app">
-        <Navbar inverse brand={HomeLink} toggleNavKey={0}>
-          <CollapsableNav eventKey={0}>
+        <Navbar inverse fluid brand={brand} toggleNavKey={0}>
+          <CollapsableNav right eventKey={0}>
             <Nav navbar right>
+              <NavItemLink to="home">
+                Home
+              </NavItemLink>
               <NavItemLink to="play">
                 Play
               </NavItemLink>
