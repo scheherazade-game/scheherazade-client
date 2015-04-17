@@ -89,7 +89,7 @@ export default React.createClass({
         </Navbar>
         <TransitionGroup transitionName="fade"
                          component="div"
-                         className="container-fluid">
+                         className="transition-group container-fluid">
           <RouteHandler key={this.context.router.getCurrentPath()}/>
         </TransitionGroup>
       </div>
