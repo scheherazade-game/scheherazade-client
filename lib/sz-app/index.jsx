@@ -67,7 +67,10 @@ export default React.createClass({
             </MenuItem>
           </DropdownButton> :
           <ModalTrigger modal={LoginModal}>
-            <NavItem onClick={e => e.preventDefault()}>Sign In</NavItem>
+            <NavItem onClick={e => {
+              e.preventDefault();
+              this.setState({loginType: "login"});
+            }}>Sign In</NavItem>
           </ModalTrigger>;
     return (
       <div className="sz-app">
