@@ -46,8 +46,7 @@ export default React.createClass({
     }
   },
   render() {
-    let HomeLink = <Link to="home">Scheherazade</Link>;
-    let LoginModal = (
+    let LoginModal = !this.state.user && (
         <Modal ref="modal" title={this.getModalTitle()}>
           <div className="modal-body">
             <LoginForm onTypeChange={type => this.setState({loginType: type})}
