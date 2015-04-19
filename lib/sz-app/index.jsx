@@ -59,7 +59,7 @@ export default React.createClass({
         </Modal>
     );
     let UserNavItem = this.state.user ?
-          <DropdownButton title={this.state.user.email}>
+          <DropdownButton title={this.state.user.name}>
             <MenuItem>Profile</MenuItem>
             <MenuItem divider />
             <MenuItem onClick={e => {e.preventDefault(); db.unauth();}}>
