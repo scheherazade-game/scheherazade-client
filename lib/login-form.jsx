@@ -115,6 +115,13 @@ export default React.createClass({
             label: "I'm 18 or older"
           })}
           <ButtonToolbar className="pull-right">
+            {!isReset &&
+             <FlatButton onClick={e => {
+                           this.setState({type: "reset"});
+                           this.props.onTypeChange("reset");
+                         }}>
+             Reset
+             </FlatButton>}
             <FlatButton disabled={this.state.pending}
                         onClick={e => {
                           e.preventDefault();
@@ -125,21 +132,11 @@ export default React.createClass({
                         }}>
               <span>{!isLogin ? "Sign In" : "Register" }</span>
             </FlatButton>
-            <Button bsStyle="primary"
-                    type="submit"
-                    disabled={this.state.pending}>
+            <FlatButton bsStyle="primary"
+                        type="submit"
+                        disabled={this.state.pending}>
               Submit
-            </Button>
-          </ButtonToolbar>
-          <ButtonToolbar className="pull-right">
-            {!isReset &&
-             <Button bsStyle="link"
-                     onClick={e => {
-                       this.setState({type: "reset"});
-                       this.props.onTypeChange("reset");
-                     }}>
-             Forgot Password?
-             </Button>}
+            </FlatButton>
           </ButtonToolbar>
         </form>
     );
