@@ -1,4 +1,5 @@
 import React from "react";
+import TransitionGroup from "react/lib/ReactCSSTransitionGroup";
 import {Input, Button, ButtonToolbar, Alert} from "react-bootstrap";
 import FlatButton from "lib/material/flat-button";
 import db from "lib/db";
@@ -53,6 +54,14 @@ export default React.createClass({
       });
     });
   },
+  setType(type) {
+    this.setState({
+      error: null,
+      type: type
+    });
+    this.props.onTypeChange &&
+      this.props.onTypeChange(type);
+  },
   handleSubmit(ev) {
     ev.preventDefault();
     this.setState({pending: true});
@@ -61,6 +70,7 @@ export default React.createClass({
   renderInput(props) {
     return (
         <Input {...props}
+               key={props.ref}
                bsStyle={this.state.error && "error"}
                disabled={this.state.pending}
                onChange={e => {
@@ -82,7 +92,9 @@ export default React.createClass({
     let isRegister = this.state.type === "register";
     let isReset = this.state.type === "reset";
     return (
-        <form onSubmit={e => this.handleSubmit(e)}>
+        <TransitionGroup transitionName="grow"
+                         component="form"
+                         onSubmit={e => this.handleSubmit(e)}>
           {FormError}
           {isRegister && this.renderInput({
             ref: "name",
@@ -115,20 +127,13 @@ export default React.createClass({
             label: "I'm 18 or older"
           })}
           <ButtonToolbar className="pull-right">
-            {!isReset &&
-             <FlatButton onClick={e => {
-                           this.setState({type: "reset"});
-                           this.props.onTypeChange("reset");
-                         }}>
-             Reset
-             </FlatButton>}
+            <FlatButton onClick={e => this.setType("reset")}>
+              Reset
+            </FlatButton>
             <FlatButton disabled={this.state.pending}
                         onClick={e => {
                           e.preventDefault();
-                          let newType = isLogin ? "register" : "login";
-                          this.setState({type: newType});
-                          this.props.onTypeChange &&
-                            this.props.onTypeChange(newType);
+                          this.setType(isLogin ? "register" : "login");
                         }}>
               <span>{!isLogin ? "Sign In" : "Register" }</span>
             </FlatButton>
@@ -138,7 +143,7 @@ export default React.createClass({
               Submit
             </FlatButton>
           </ButtonToolbar>
-        </form>
+        </TransitionGroup>
     );
   }
 });
